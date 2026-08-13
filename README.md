@@ -1,6 +1,6 @@
 # Fatty Acid PCM Cooling of Photovoltaic Panels — A Simulation Study for Karabakh, Azerbaijan
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21917430.svg)](https://doi.org/10.5281/zenodo.21917430)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21917429.svg)](https://doi.org/10.5281/zenodo.21917429)
 
 Simulation source code and climate data for the MSc dissertation of **Farid Aliyev** (WMG, University of Warwick, August 2026).
 
@@ -41,7 +41,7 @@ The model equations and parameter values are described in Chapter 3 of the disse
 
 Farid Aliyev, August 2026. If you use this code, please cite:
 
-> Aliyev, F. (2026) *Fatty Acid PCM Cooling of Photovoltaic Panels: A Simulation Study for Karabakh, Azerbaijan* [MATLAB and Python source code]. Zenodo. Available from: https://doi.org/10.5281/zenodo.21917430
+> Aliyev, F. (2026) *Fatty Acid PCM Cooling of Photovoltaic Panels: A Simulation Study for Karabakh, Azerbaijan* [MATLAB and Python source code]. Zenodo. Available from: https://doi.org/10.5281/zenodo.21920886
 
 Repository: https://github.com/faridaliyev2002/pv-pcm-karabakh-simulation
 
