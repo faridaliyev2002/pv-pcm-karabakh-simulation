@@ -1,5 +1,7 @@
 # Fatty Acid PCM Cooling of Photovoltaic Panels — A Simulation Study for Karabakh, Azerbaijan
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21917430.svg)](https://doi.org/10.5281/zenodo.21917430)
+
 Simulation source code and climate data for the MSc dissertation of **Farid Aliyev** (WMG, University of Warwick, August 2026).
 
 The project models the cooling of a photovoltaic panel by a fatty acid phase change material (PCM) layer fitted to its back, for the climate of Jabrayil, Azerbaijan (39.330°N, 47.052°E). The simulation covers one summer of typical weather data (June to August, 2,208 hourly records) and compares panel temperature and electrical yield with and without the PCM layer, for two fatty acid mixtures: MA-SA 64:36 (melting point 44.13 °C) and LA-SA 75.5:24.5 (melting point 37.0 °C). The heat transfer model is described in Chapter 3 of the dissertation.
@@ -39,6 +41,6 @@ The model equations and parameter values are described in Chapter 3 of the disse
 
 Farid Aliyev, August 2026. If you use this code, please cite:
 
-> Aliyev, F. (2026) *Fatty Acid PCM Cooling of Photovoltaic Panels: A Simulation Study for Karabakh, Azerbaijan* [MATLAB and Python source code]. Available from: https://github.com/faridaliyev2002/pv-pcm-karabakh-simulation
+> Aliyev, F. (2026) *Fatty Acid PCM Cooling of Photovoltaic Panels: A Simulation Study for Karabakh, Azerbaijan* [MATLAB and Python source code]. Zenodo. https://doi.org/10.5281/zenodo.21917430
 
 Code is released under the MIT License (see `LICENSE`).

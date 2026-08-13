@@ -5,9 +5,10 @@ title: "Fatty Acid PCM Cooling of Photovoltaic Panels: A Simulation Study for Ka
 authors:
   - family-names: "Aliyev"
     given-names: "Farid"
-version: 1.0.0
+version: 1.0.1
 date-released: 2026-08-13
 license: MIT
+doi: 10.5281/zenodo.21917430
 repository-code: "https://github.com/faridaliyev2002/pv-pcm-karabakh-simulation"
 abstract: "MATLAB and Python source code and processed PVGIS climate data for an MSc dissertation simulating the cooling of a photovoltaic panel by a fatty acid phase change material layer, for the climate of Jabrayil, Azerbaijan."
 keywords:
