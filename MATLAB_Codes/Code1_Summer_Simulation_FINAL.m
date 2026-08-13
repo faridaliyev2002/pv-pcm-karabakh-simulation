@@ -29,9 +29,9 @@
 %           sensitivity_results.csv and
 %           mass_sensitivity_results.csv (outputs of the two
 %           sensitivity scripts; needed only for Figures
-%           4.5 and 4.6)
+%           4.6 and 4.7)
 %  OUTPUTS: final_hourly_results.csv, final_summary_stats.csv
-%           Figure_4_1_FINAL.png ... Figure_4_6_FINAL.png
+%           Figure_4_1_FINAL.png ... Figure_4_7_FINAL.png
 %           (exported at 300 dpi)
 % =========================================================
 
@@ -150,7 +150,7 @@ set(0,'DefaultAxesFontName','Times New Roman','DefaultAxesFontSize',11, ...
       'DefaultTextFontName','Times New Roman','DefaultLineLineWidth',1.5);
 C_bl=[0.85 0.15 0.15]; C_ma=[0.12 0.47 0.71]; C_la=[0.20 0.63 0.17]; C_am=[0.6 0.6 0.6];
 
-% Figure 4.1 — (a) daily maxima, full summer; (b) sustained 3-day hot episode
+% Figure 4.1 — daily maxima, full summer
 ndays   = N/24;
 dayix   = repelem((1:ndays)',24);
 dmax_B  = accumarray(dayix, T_pv_B(:),  [], @max);
@@ -160,18 +160,20 @@ m3 = movmean(dmax_B,[2 0]);            % trailing 3-day mean of daily maxima
 [~,we] = max(m3); ws = we-2;           % sustained-heat window (1-based days)
 hsel = (dayix>=ws & dayix<=we);
 
-f1=figure('Position',[50 50 900 640],'Color','w');
-subplot(2,1,1); hold on;
+f1=figure('Position',[50 50 900 340],'Color','w'); hold on;
 plot(0:ndays-1,dmax_am,'-','Color',C_am,'LineWidth',1.2,'DisplayName','Ambient (daily max)');
 plot(0:ndays-1,dmax_B ,'-','Color',C_bl,'LineWidth',1.7,'DisplayName','Baseline (daily max)');
 plot(0:ndays-1,dmax_A ,'-','Color',C_ma,'LineWidth',1.7,'DisplayName','MA-SA PCM 30 kg (daily max)');
 yline(TmA,':k','LineWidth',1.1,'DisplayName','Melting point (44.1°C)');
 xlabel('Day of simulation (1 June = Day 0)'); ylabel('Daily max temperature (°C)');
-title('(a) Daily maximum panel temperature, full summer','FontSize',10,'FontWeight','normal');
+title('Daily maximum panel temperature, full summer','FontSize',10,'FontWeight','normal');
 legend('Location','southwest','FontSize',8,'NumColumns',2);
 grid on; box on; xlim([0 ndays-1]); set(gca,'GridAlpha',0.3);
 
-subplot(2,1,2); hold on;
+exportgraphics(f1,'Figure_4_1_FINAL.png','Resolution',300);
+
+% Figure 4.2 — sustained 3-day hot episode, hourly detail
+f2=figure('Position',[50 450 900 340],'Color','w'); hold on;
 tt=(0:sum(hsel)-1)/24;
 plot(tt,T_amb(hsel)   ,'-','Color',C_am,'LineWidth',1.1,'DisplayName','Ambient');
 plot(tt,T_pv_B(hsel)  ,'-','Color',C_bl,'LineWidth',1.7,'DisplayName','Baseline');
@@ -180,12 +182,12 @@ plot(tt,T_pcm_Aa(hsel),'--','Color',C_la,'LineWidth',1.3,'DisplayName','PCM temp
 yline(TmA,':k','LineWidth',1.1,'DisplayName','Melting point (44.1°C)');
 xlabel(sprintf('Day within sustained hot episode (Days %d–%d)',ws-1,we-1));
 ylabel('Temperature (°C)');
-title('(b) Sustained 3-day hot episode, hourly detail','FontSize',10,'FontWeight','normal');
+title('Sustained three-day hot episode, hourly detail','FontSize',10,'FontWeight','normal');
 legend('Location','northwest','FontSize',8,'NumColumns',2);
 grid on; box on; xlim([0 3]); set(gca,'GridAlpha',0.3);
-exportgraphics(f1,'Figure_4_1_FINAL.png','Resolution',300);
+exportgraphics(f2,'Figure_4_2_FINAL.png','Resolution',300);
 
-% Figure 4.2 — efficiency over an average July day (local time)
+% Figure 4.3 — efficiency over an average July day (local time)
 eB_h=zeros(1,24); eA_h=zeros(1,24); g_h=zeros(1,24);
 idx_jul2 = month==7;
 for h=0:23
@@ -193,7 +195,7 @@ for h=0:23
     eB_h(h+1)=mean(eta_B(ih))*100; eA_h(h+1)=mean(eta_A(ih))*100;
     g_h(h+1)=mean(G(ih));
 end
-f2=figure('Position',[50 500 900 420],'Color','w'); hold on;
+f3=figure('Position',[50 500 900 420],'Color','w'); hold on;
 yl2=[12.8 16.8];
 night = g_h<5;
 dn=diff([0 night 0]); ns=find(dn==1)-1; ne=find(dn==-1)-2;
@@ -211,10 +213,10 @@ xlabel('Hour of day (local time, UTC+4)'); ylabel('Mean PV efficiency (%)');
 title('PV Efficiency over an Average July Day (Jabrayil, TMY)','FontSize',10,'FontWeight','normal');
 legend('Location','southwest','FontSize',8); grid on; box on;
 xlim([0 23]); ylim(yl2); xticks(0:2:23); set(gca,'GridAlpha',0.3);
-exportgraphics(f2,'Figure_4_2_FINAL.png','Resolution',300);
+exportgraphics(f3,'Figure_4_3_FINAL.png','Resolution',300);
 
-% Figure 4.3 — monthly energy, three cases
-f3=figure('Position',[950 50 640 420],'Color','w');
+% Figure 4.4 — monthly energy, three cases
+f4=figure('Position',[950 50 640 420],'Color','w');
 bd=[EmB; EmA; EmC]';
 b=bar(bd,'grouped'); b(1).FaceColor=C_bl; b(2).FaceColor=C_ma; b(3).FaceColor=C_la;
 hold on;
@@ -227,10 +229,10 @@ xlabel('Month'); ylabel('Energy Generated per Panel (kWh)');
 title('Monthly Energy Output: Baseline vs. MA-SA and LA-SA PCM, 30 kg (Jabrayil, JJA TMY)','FontSize',10,'FontWeight','normal');
 legend({'Baseline (no PCM)','MA-SA 64:36 (44.1°C)','LA-SA 75.5:24.5 (37.0°C)'},'Location','southoutside','Orientation','horizontal','FontSize',9);
 set(gca,'XTickLabel',month_names,'GridAlpha',0.3); grid on; box on; ylim([0 60]);
-exportgraphics(f3,'Figure_4_3_FINAL.png','Resolution',300);
+exportgraphics(f4,'Figure_4_4_FINAL.png','Resolution',300);
 
-% Figure 4.4 — average July day temperature profile, LOCAL time
-f4=figure('Position',[950 500 640 420],'Color','w');
+% Figure 4.5 — average July day temperature profile, LOCAL time
+f5=figure('Position',[950 500 640 420],'Color','w');
 idx_jul = month==7;
 for h=0:23
     ih = idx_jul & (hour_loc==h);
@@ -248,12 +250,12 @@ xlabel('Hour of day (local time, UTC+4)'); ylabel('Mean Temperature (°C)');
 title('Panel Temperature over an Average July Day (Jabrayil, TMY)','FontSize',10,'FontWeight','normal');
 legend('Location','northoutside','NumColumns',3,'FontSize',8); grid on; box on; xlim([0 23]); xticks(0:2:23);
 set(gca,'GridAlpha',0.3);
-exportgraphics(f4,'Figure_4_4_FINAL.png','Resolution',300);
+exportgraphics(f5,'Figure_4_5_FINAL.png','Resolution',300);
 
-% Figure 4.5 — melting-point sweep (from sensitivity_results.csv)
+% Figure 4.6 — melting-point sweep (from sensitivity_results.csv)
 try
     S = readmatrix('sensitivity_results.csv');
-    f5=figure('Position',[100 100 980 440],'Color','w');
+    f6=figure('Position',[100 100 980 440],'Color','w');
     yyaxis left
     bar(S(:,1),S(:,5),0.5,'FaceColor',C_ma,'FaceAlpha',0.85); hold on;
     [~,bi]=max(S(:,5));
@@ -273,13 +275,13 @@ try
     title('PCM Melting-Point Sensitivity at 4 kg (Jabrayil, JJA TMY)','FontSize',10,'FontWeight','normal');
     legend({'Energy gain (%)','Least-unfavourable (40°C)','PCM at/above solidus (%)'},'Location','northwest','FontSize',9);
     xticks(S(:,1)); grid on; box on;
-    exportgraphics(f5,'Figure_4_5_FINAL.png','Resolution',300);
-catch, fprintf('NOTE: sensitivity_results.csv not found — Figure 4.5 skipped\n'); end
+    exportgraphics(f6,'Figure_4_6_FINAL.png','Resolution',300);
+catch, fprintf('NOTE: sensitivity_results.csv not found — Figure 4.6 skipped\n'); end
 
-% Figure 4.6 — mass sweep (from mass_sensitivity_results.csv)
+% Figure 4.7 — mass sweep (from mass_sensitivity_results.csv)
 try
     M = readmatrix('mass_sensitivity_results.csv');
-    f6=figure('Position',[100 100 900 420],'Color','w'); hold on;
+    f7=figure('Position',[100 100 900 420],'Color','w'); hold on;
     i40 = abs(M(:,1)-40.0)<0.01;  iMA = abs(M(:,1)-44.13)<0.01;
     plot(M(i40,2),M(i40,7),'o-','Color',C_ma,'LineWidth',1.8,'MarkerFaceColor',C_ma,'DisplayName','T_{melt} = 40°C (sweep optimum)');
     plot(M(iMA,2),M(iMA,7),'s-','Color',C_bl,'LineWidth',1.8,'MarkerFaceColor',C_bl,'DisplayName','T_{melt} = 44.13°C (MA-SA)');
@@ -289,8 +291,8 @@ try
     xlabel('PCM Mass per Panel (kg)'); ylabel('Summer Energy Gain (%)');
     title('PCM Mass Sensitivity (Jabrayil, JJA TMY)','FontSize',10,'FontWeight','normal');
     legend('Location','northwest','FontSize',10); grid on; box on; xticks(unique(M(:,2)));
-    exportgraphics(f6,'Figure_4_6_FINAL.png','Resolution',300);
-catch, fprintf('NOTE: mass_sensitivity_results.csv not found — Figure 4.6 skipped\n'); end
+    exportgraphics(f7,'Figure_4_7_FINAL.png','Resolution',300);
+catch, fprintf('NOTE: mass_sensitivity_results.csv not found — Figure 4.7 skipped\n'); end
 
 fprintf('All figures exported at 300 dpi.\nDONE - FINAL RUN COMPLETE\n');
 
